@@ -1,9 +1,15 @@
-export function GamesTable({localTeam = 'A confirmar', visitantTeam = 'A confirmar', isPlayed, formattedVs, children}){
+import { useState } from "react"
+
+export function GamesTable({homeTeam = 'A confirmar', awayTeam = 'A confirmar'}){
+
     return(
             <div className="game-row">
-                <p className='game-item'><span>{localTeam}{formattedVs}{visitantTeam}</span></p>
-                <button className="game-confirm">Confirmar</button>
-                {children}
+                <input type="checkbox" name={homeTeam} id={homeTeam} />
+                <label htmlFor={homeTeam}>{homeTeam}</label>
+                <input type="checkbox" name="Draw" id="Draw" />
+                <label htmlFor="Draw">Empate</label>
+                <input type="checkbox" name={awayTeam} id={awayTeam} />
+                <label htmlFor={awayTeam}>{awayTeam}</label>
             </div>
     )
 }

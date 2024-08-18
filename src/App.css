@@ -1,3 +1,7 @@
+*{
+    font-family:monospace;
+}
+
 .main-title{
     color: blueviolet;
 }
@@ -8,21 +12,6 @@
     align-items: center;
 }
 
-.game-item{
+.game-row label{
     color: darkslateblue;
-    min-width: 250px;
-}
-
-.game-confirm{
-    background-color: darkslateblue;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    color: aliceblue;
-    cursor: pointer;
-}
-
-.game-confirm:hover{
-    background-color: blueviolet;
-    transition: .5s ease background-color;
 }
