@@ -1,7 +1,7 @@
 import './App.css'
-import { GamesTable } from './GamesTable'
+import GamesTable from './GamesTable'
 
-export function App(){
+const App = () => {
 
     const games = [
         {
@@ -28,3 +28,5 @@ export function App(){
         </div>
     )
 }
+
+export default App
