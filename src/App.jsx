@@ -24,7 +24,7 @@ export function App(){
             {games.map(({homeTeam, awayTeam}) =>(
                 <GamesTable homeTeam={homeTeam} awayTeam={awayTeam}/>
             ))}
-            <button>Play!</button>
+            <button disabled>Play!</button>
         </div>
     )
 }
