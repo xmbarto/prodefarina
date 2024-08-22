@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import { useState } from "react"
 
-const GamesTable = ({homeTeam, awayTeam}) => {
+const GamesTable = ({homeTeam, awayTeam, handleDoubleChance, numWithTwoSelected}) => {
+    
     const [selected, setSelected] = useState({
         home: false,
         draw: false,
@@ -9,27 +10,32 @@ const GamesTable = ({homeTeam, awayTeam}) => {
 
     const handleChange = (e) => {
         const {name, checked} = e.target
-        const selectedCounter = Object.values(selected).filter(val => val).length
-        
-        if (checked && selectedCounter >= 2) {
-            return
+
+        const newSelected = {
+            ...selected,
+            [name]: checked
         }
-
-        setSelected((prevState) => ({
-            ...prevState,
-            [name]: checked,
-        }))
+        
+        const countSelected = Object.values(newSelected).filter(val => val).length
+        
+        if(countSelected === 2){
+            handleDoubleChance(true)
+        } else if(countSelected < 2 && Object.values(selected).filter(val => val).length == 2){
+            handleDoubleChance(false)
+        }
+        
+        setSelected(newSelected)
     }
-
+        
     return(
             <div className="game-row">
                 <input 
                     type="checkbox"
                     name="home"
                     id={homeTeam}
-                    checked={selected.home}
                     onChange={handleChange}
-                    disabled={selected.draw && selected.away}
+                    checked={selected.home}
+                    disabled={selected.home ? false : numWithTwoSelected > 0 && Object.values(selected).filter(val => val).length === 1 || selected.draw && selected.away}
                 />
                 <label htmlFor={homeTeam}>{homeTeam}</label>
                 
@@ -37,9 +43,9 @@ const GamesTable = ({homeTeam, awayTeam}) => {
                     type="checkbox"
                     name="draw"
                     id={"D"+homeTeam}
-                    checked={selected.draw}
                     onChange={handleChange}
-                    disabled={selected.home && selected.away}
+                    checked={selected.draw}
+                    disabled={selected.draw ? false : numWithTwoSelected > 0 && Object.values(selected).filter(val => val).length === 1 || selected.home && selected.away}
                 />
                 <label htmlFor={"D"+homeTeam}>Empate</label>
                 
@@ -47,9 +53,9 @@ const GamesTable = ({homeTeam, awayTeam}) => {
                     type="checkbox"
                     name="away"
                     id={awayTeam}
-                    checked={selected.away}
                     onChange={handleChange}
-                    disabled={selected.draw && selected.home}
+                    checked={selected.away}
+                    disabled={selected.away ? false : numWithTwoSelected > 0 && Object.values(selected).filter(val => val).length === 1 || selected.draw && selected.home}
                 />
                 <label htmlFor={awayTeam}>{awayTeam}</label>
             </div>
