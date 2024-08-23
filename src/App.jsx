@@ -27,20 +27,31 @@ const App = () => {
     },[countSelected, currentGame])
 
     return(
-        <div>
-            <h2 className='main-title'>Prodemaster</h2>
-            {currentGame.map(({id, homeTeam, awayTeam}) => (
-                <GamesTable
-                    key={id}
-                    homeTeam={homeTeam}
-                    awayTeam={awayTeam}
-                    handleDoubleChance={handleDoubleChance}
-                    numWithTwoSelected={numWithTwoSelected}
-                    handleReadyToPlay={handleReadyToPlay}
-                />
-            ))}
-            <button disabled={!readyToPlay}>Play!</button>
-        </div>
+        <>
+            <section className='pl-header'>
+                <h2 className='main-title'>Prodemaster</h2>
+            </section>
+            <section className='pl-settings'>
+                <h2>Fecha Nº: <span>30</span></h2>
+                <h3>Cierre: <span>Viernes 18hs</span></h3>
+            </section>
+            <section className='pl-game'>
+                <input type="text" placeholder='Nombre'/>
+                {currentGame.map(({id, homeTeam, awayTeam}) => (
+                    <GamesTable
+                        key={id}
+                        homeTeam={homeTeam}
+                        awayTeam={awayTeam}
+                        handleDoubleChance={handleDoubleChance}
+                        numWithTwoSelected={numWithTwoSelected}
+                        handleReadyToPlay={handleReadyToPlay}
+                    />
+                ))}
+            </section>
+            <section className='pl-footer'>
+                <button disabled={!readyToPlay}>Play!</button>
+            </section>
+        </>
     )
 }
 
