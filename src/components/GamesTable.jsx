@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const GamesTable = ({homeTeam, awayTeam, handleDoubleChance, numWithTwoSelected}) => {
+const GamesTable = ({homeTeam, awayTeam, handleDoubleChance, numWithTwoSelected, handleReadyToPlay}) => {
     
     const [selected, setSelected] = useState({
         home: false,
@@ -13,17 +13,23 @@ const GamesTable = ({homeTeam, awayTeam, handleDoubleChance, numWithTwoSelected}
 
         const newSelected = {
             ...selected,
-            [name]: checked
+            [name]: checked,
         }
-        
+
         const countSelected = Object.values(newSelected).filter(val => val).length
-        
+
+        if(countSelected >= 1){
+            handleReadyToPlay(true)
+        } else if(countSelected == 0){
+            handleReadyToPlay(false)
+        }
+
         if(countSelected === 2){
             handleDoubleChance(true)
         } else if(countSelected < 2 && Object.values(selected).filter(val => val).length == 2){
             handleDoubleChance(false)
         }
-        
+
         setSelected(newSelected)
     }
         

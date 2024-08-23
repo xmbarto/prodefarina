@@ -1,0 +1,20 @@
+{
+    "rounds" : [
+        {
+            "id": 0,
+            "homeTeam":"Talleres",
+            "awayTeam": "Boca"
+        },
+        {
+            "id": 1,
+            "homeTeam": "Belgrano",
+            "awayTeam": "River"
+        },
+        {
+            "id": 2,
+            "homeTeam": "Instituto",
+            "awayTeam": "Atletico Rafaela"
+        }
+    ]
+
+}
