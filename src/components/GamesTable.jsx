@@ -16,14 +16,9 @@ const GamesTable = ({homeTeam, awayTeam, handleDoubleChance, numWithTwoSelected,
             [name]: checked,
         }
 
+        e.target.checked ? handleReadyToPlay(true) : handleReadyToPlay(false)
+
         const countSelected = Object.values(newSelected).filter(val => val).length
-
-        if(countSelected >= 1){
-            handleReadyToPlay(true)
-        } else if(countSelected == 0){
-            handleReadyToPlay(false)
-        }
-
         if(countSelected === 2){
             handleDoubleChance(true)
         } else if(countSelected < 2 && Object.values(selected).filter(val => val).length == 2){
@@ -32,7 +27,7 @@ const GamesTable = ({homeTeam, awayTeam, handleDoubleChance, numWithTwoSelected,
 
         setSelected(newSelected)
     }
-        
+
     return(
             <div className="game-row">
                 <input 

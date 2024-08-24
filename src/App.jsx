@@ -20,9 +20,11 @@ const App = () => {
     }
 
     useEffect(() => {
-        const roundsCount = currentGame.length
-        if(countSelected === roundsCount + 1){
+        const checksToPlay = currentGame.length + 1
+        if(countSelected === checksToPlay){
             setReadyToPlay(prevReady => !prevReady)
+        } else {
+            setReadyToPlay(false)
         }
     },[countSelected, currentGame])
 
