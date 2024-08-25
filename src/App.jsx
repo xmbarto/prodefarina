@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import GamesTable from './components/GamesTable'
 import rounds from './mocks/rounds.json'
+import NewPlayer from './components/NewPlayer'
 
 const App = () => {
 
@@ -53,6 +54,11 @@ const App = () => {
             <section className='pl-footer'>
                 <button disabled={!readyToPlay}>Play!</button>
             </section>
+            <section>
+                <h2>Agregar jugador</h2>
+                <NewPlayer></NewPlayer>
+            </section>
+            
         </>
     )
 }
