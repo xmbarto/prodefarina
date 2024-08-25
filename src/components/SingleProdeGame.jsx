@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const GamesTable = ({homeTeam, awayTeam, handleDoubleChance, numWithTwoSelected, handleReadyToPlay}) => {
+const SingleProdeGame = ({homeTeam, awayTeam, handleDoubleChance, numWithTwoSelected, handleReadyToPlay}) => {
     
     const [selected, setSelected] = useState({
         home: false,
@@ -63,4 +63,4 @@ const GamesTable = ({homeTeam, awayTeam, handleDoubleChance, numWithTwoSelected,
     )
 }
 
-export default GamesTable
+export default SingleProdeGame

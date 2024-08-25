@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import GamesTable from './components/GamesTable'
+import SingleProdeGame from './components/SingleProdeGame'
 import rounds from './mocks/rounds.json'
 import NewPlayer from './components/NewPlayer'
 
@@ -41,7 +41,7 @@ const App = () => {
             <section className='pl-game'>
                 <input type="text" placeholder='Nombre'/>
                 {currentGame.map(({id, homeTeam, awayTeam}) => (
-                    <GamesTable
+                    <SingleProdeGame
                         key={id}
                         homeTeam={homeTeam}
                         awayTeam={awayTeam}
