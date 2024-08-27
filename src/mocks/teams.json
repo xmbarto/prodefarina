@@ -1,0 +1,154 @@
+{
+    "teams": [
+        {
+            "name": "Ind. Rivadavia",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Platense",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Riestra",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Sarmiento",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Argentinos",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Huracán",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Instituto",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Def. Y Justicia",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Tigre",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Unión",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Lanús",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Godoy Cruz",
+            "logo_url": ""
+
+        },
+        {
+            "name": "San Lorenzo",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Talleres",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Racing",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Independiente",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Racing Cba",
+            "logo_url": ""
+
+        },
+        {
+            "name": "River",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Newell's",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Barracas",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Vélez",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Central Cba",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Banfield",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Belgrano",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Gimnasia LP",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Rosario Central",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Atl. Tucumán",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Estudiantes",
+            "logo_url": ""
+
+        },
+        {
+            "name": "Boca",
+            "logo_url": ""
+
+        },
+        {
+            "name": "",
+            "logo_url": ""
+
+        }
+    ]
+}
