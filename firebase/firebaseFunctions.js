@@ -8,7 +8,6 @@ export const addPlayer = async (name) => {
     const docRef = await addDoc(collection(db, "players"), {
         name: name,
         category: "amateur",
-        historical:{}
     })
     console.log("Document written with ID: ", docRef.id)
    } catch (e) {
