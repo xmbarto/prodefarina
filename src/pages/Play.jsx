@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import rounds from '../mocks/rounds.json'
 import SingleProdeGame from '../components/SingleProdeGame'
 
+// NO EXISTE MAS EL JSON!!! ARREGLAR!!
 
 const Play = () => {
     const currentGame = rounds.rounds

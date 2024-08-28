@@ -16,6 +16,7 @@ export const getRounds = async () => {
         const json = await response.json()
         return json
     } catch (e) {
+        console.log('Acá algo de cagó, saltó este error: ', e)
         throw new Error('Error del servicio')
     }
 }
