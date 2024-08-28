@@ -1,151 +1,181 @@
 {
     "teams": [
         {
+            "id": 0,
             "name": "Ind. Rivadavia",
             "logo_url": ""
 
         },
         {
+            "id": 1,
             "name": "Platense",
             "logo_url": ""
 
         },
         {
+            "id": 2,
             "name": "Riestra",
             "logo_url": ""
 
         },
         {
+            "id": 3,
             "name": "Sarmiento",
             "logo_url": ""
 
         },
         {
+            "id": 4,
             "name": "Argentinos",
             "logo_url": ""
 
         },
         {
+            "id": 5,
             "name": "Huracán",
             "logo_url": ""
 
         },
         {
+            "id": 6,
             "name": "Instituto",
             "logo_url": ""
 
         },
         {
+            "id": 7,
             "name": "Def. Y Justicia",
             "logo_url": ""
 
         },
         {
+            "id": 8,
             "name": "Tigre",
             "logo_url": ""
 
         },
         {
+            "id": 9,
             "name": "Unión",
             "logo_url": ""
 
         },
         {
+            "id": 10,
             "name": "Lanús",
             "logo_url": ""
 
         },
         {
+            "id": 11,
             "name": "Godoy Cruz",
             "logo_url": ""
 
         },
         {
+            "id": 12,
             "name": "San Lorenzo",
             "logo_url": ""
 
         },
         {
+            "id": 13,
             "name": "Talleres",
             "logo_url": ""
 
         },
         {
+            "id": 14,
             "name": "Racing",
             "logo_url": ""
 
         },
         {
+            "id": 15,
             "name": "Independiente",
             "logo_url": ""
 
         },
         {
+            "id": 16,
             "name": "Racing Cba",
             "logo_url": ""
 
         },
         {
+            "id": 17,
             "name": "River",
             "logo_url": ""
 
         },
         {
+            "id": 18,
             "name": "Newell's",
             "logo_url": ""
 
         },
         {
+            "id": 19,
             "name": "Barracas",
             "logo_url": ""
 
         },
         {
+            "id": 20,
             "name": "Vélez",
             "logo_url": ""
 
         },
         {
+            "id": 21,
             "name": "Central Cba",
             "logo_url": ""
 
         },
         {
+            "id": 22,
             "name": "Banfield",
             "logo_url": ""
 
         },
         {
+            "id": 23,
             "name": "Belgrano",
             "logo_url": ""
 
         },
         {
+            "id": 24,
             "name": "Gimnasia LP",
             "logo_url": ""
 
         },
         {
+            "id": 25,
             "name": "Rosario Central",
             "logo_url": ""
 
         },
         {
+            "id": 26,
             "name": "Atl. Tucumán",
             "logo_url": ""
 
         },
         {
+            "id": 27,
             "name": "Estudiantes",
             "logo_url": ""
 
         },
         {
+            "id": 28,
             "name": "Boca",
             "logo_url": ""
 
         },
         {
+            "id": 29,
             "name": "",
             "logo_url": ""
 
