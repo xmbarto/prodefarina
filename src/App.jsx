@@ -1,7 +1,6 @@
 import { Link, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
-import Play from './pages/Play'
 import Admin from './pages/Admin'
 
 
@@ -20,15 +19,15 @@ const App = () => {
                 <li>
                     <Link to="/pages/admin">Admin</Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link to="/pages/play">Jugar</Link>
-                </li>
+                </li> */}
             </ul>
            </nav>
            <Routes>
                 <Route path="/" element={<Home />}/>
                 <Route path="/pages/admin" element={<Admin />}/>
-                <Route path="/pages/play" element={<Play />}/>
+                {/* <Route path="/pages/play" element={<Play />}/> */}
            </Routes>
         </>
     )

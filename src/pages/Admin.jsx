@@ -16,7 +16,6 @@ const Admin = () => {
 
     return(
         <>
-            <h2>Hello Admin!</h2>
             <NewProdeForm/>
         </>
     )
