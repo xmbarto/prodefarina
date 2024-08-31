@@ -1,52 +1,60 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { searchFixtures } from "../functions/fixtures"
+// import { utcToZonedTime, format } from 'date-fns-tz';
 
 export function NewProdeForm() {
 const [fixture, setFixture] = useState([])
+const [loading, setLoading] = useState(false)
 const [showDetails, setShowDetails] = useState(false)
+const prizeRef = useRef(null)
+
 
 const handleClick = async () => {
+    setLoading(true)
     try {
-        const fixtures = await searchFixtures()
-        const lastFixture = fixtures.filter(i => i.round.includes('13'))
+        const lastFixture = await searchFixtures()
         setFixture(lastFixture)
         setShowDetails(true)
+
     } catch (e) {
         console.error(e.message)
+    } finally {
+        setLoading(false)
     }
+}
+
+const handleSubmit = (e) => {
+    e.preventDefault()
 }
 
     return(
         <>
-        <h3>Crear Tarjeta</h3>
-        <div>
-            <form>
-                <input type="text" name="start" placeholder="Día de inicio"/>
-                <input type="text" name="end" placeholder="Día de finalización"/>
+            <h3>Crear Tarjeta</h3>
+            <button onClick={handleClick}>Generar próxima fecha</button>
+            <form onSubmit={handleSubmit}>
                 <label htmlFor="prize"> Valor de tarjeta
-                    <input type="number" name="card-prize" id="prize"/>
+                    <input type="number" ref={prizeRef} name="card-prize" id="prize"/>
                 </label>
+                <div>
+                    {showDetails && (
+                        <>
+                            <p>Fecha número {fixture.roundnumber}</p>
+                            <button type="submit">Generar Prode</button>
+                            <h4>Partidos</h4>
+                        </>
+                    )}
+                    {loading 
+                        ? (<p>Cargando partidos...</p>)
+                        : fixture?.matches?.length > 0 ? (
+                            fixture.matches.map((fix) => (
+                                <div key={fix.id}>
+                                    <p>{fix.home.name} vs {fix.away.name}</p>
+                                </div>
+                            ))) 
+                        : null
+                    }
+                </div>
             </form>
-            <button onClick={handleClick}>Crear</button>
-            <div>
-                {showDetails && (
-                    <>
-                        <p>Fecha número {fixture[0].round.slice(-2)}</p>
-                        <button>Generar Prode</button>
-                        <h4>Partidos</h4>
-                    </>
-                )}
-                { fixture && fixture.length > 0 ? (
-                    fixture.map((fix) => (
-                        <div key={fix.teams.home.id}>
-                            <p>{fix.teams.home.name} vs {fix.teams.away.name}</p>
-                        </div>
-                    ))
-                    ) : null
-                }
-            </div>
-        </div>
-        
         </>
     )
 }

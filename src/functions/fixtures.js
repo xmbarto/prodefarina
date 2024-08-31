@@ -2,10 +2,13 @@
 const API_KEY = 'aa0007933ae266382185d14057bf4dcf'
 const A_LEAGUE_ID = 128
 const CURRENT_SEASON = 2024
+const TIMEZONE = "America/Buenos Aires"
+const ROUND = "Round - 15"
+
 
 export const searchFixtures = async () => {
     try{
-        const response = await fetch(`https://v3.football.api-sports.io/fixtures?league=${A_LEAGUE_ID}&season=${CURRENT_SEASON}`,{
+        const response = await fetch(`https://v3.football.api-sports.io/fixtures?league=${A_LEAGUE_ID}&season=${CURRENT_SEASON}&round=${ROUND}&timezone=${TIMEZONE}`,{
             method: 'GET',
             headers:{
                 "x-rapidapi-host": "v3.football.api-sports.io",
@@ -17,24 +20,29 @@ export const searchFixtures = async () => {
             throw new Error('mmm el server está cagado, no responde el gil');
         }
         const json = await response.json()
-        
-        return json.response.map(team => ({
-            round: team.league.round,
-
-            teams:{
+        const currentRound = {
+            roundnumber: json.response[0].league.round.split(' ').pop(),
+            year: json.response[0].league.season,
+            entryfee: null,
+            jackpot: null,
+            matches: json.response.map(match => ({
+                id: match.fixture.id,
                 home: {
-                    id: team.teams.home.id,
-                    name: team.teams.home.name,
-                    isWinner: team.teams.home.winner
+                    id: match.teams.home.id,
+                    name: match.teams.home.name,
+                    winner: match.teams.home.winner,
+                    logo: match.teams.home.logo
                 },
                 away: {
-                    id: team.teams.away.id,
-                    name: team.teams.away.name,
-                    isWinner: team.teams.away.winner
+                    id: match.teams.away.id,
+                    name: match.teams.away.name,
+                    winner: match.teams.away.winner,
+                    logo: match.teams.away.logo
                 }
-            }
-            
-        }))
+            }))
+        }
+        
+        return currentRound
 
     } catch (e) {
         console.log('Acá algo de cagó, saltó este error: ', e)
@@ -42,3 +50,16 @@ export const searchFixtures = async () => {
     }
 }
 
+// rounds
+//   |
+//   └── round-id
+//         ├── roundnumber -> round
+//         ├── year -> year
+//         ├── entryfee -> empty
+//         ├── jackpot -> empty
+//         ├── matches
+//               ├── match-id-1
+//                     |away -> away.name
+//                     |home -> home.name
+//                     |date -> date
+//                     |winner -> null
