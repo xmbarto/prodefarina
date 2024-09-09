@@ -15,9 +15,16 @@ export const addPlayer = async (name) => {
    }
 }
 
-// Add a round
-export const addRound = async (round) => {
-    
+// Add a round from fixture data 
+export const addRoundFromFixture = async (fixture) => {
+    try {
+        const roundRef = await addDoc(collection(db, "rounds"), {
+            ...fixture,
+        })
+        console.log("Document written with ID: ", roundRef.id)
+    } catch (e) {
+        console.error("Error adding document: ", e)
+    }
 }
 
 // rounds

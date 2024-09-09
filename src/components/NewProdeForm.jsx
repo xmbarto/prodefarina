@@ -1,37 +1,41 @@
 import { useRef, useState } from "react"
 import { searchFixtures } from "../functions/fixtures"
+import { addRoundFromFixture } from "../../firebase/firebaseFunctions"
 // import { utcToZonedTime, format } from 'date-fns-tz';
 
 export function NewProdeForm() {
-const [fixture, setFixture] = useState([])
-const [loading, setLoading] = useState(false)
-const [showDetails, setShowDetails] = useState(false)
-const prizeRef = useRef(null)
+    const [fixture, setFixture] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [showDetails, setShowDetails] = useState(false)
+    const prizeRef = useRef(null)
 
 
-const handleClick = async () => {
-    setLoading(true)
-    try {
-        const lastFixture = await searchFixtures()
-        setFixture(lastFixture)
-        setShowDetails(true)
+    const handleClick = async () => {
+        setLoading(true)
+        try {
+            const lastFixture = await searchFixtures()
+            setFixture(lastFixture)
+            setShowDetails(true)
 
-    } catch (e) {
-        console.error(e.message)
-    } finally {
-        setLoading(false)
+        } catch (e) {
+            console.error(e.message)
+        } finally {
+            setLoading(false)
+        }
     }
-}
 
-const handleSubmit = (e) => {
-    e.preventDefault()
-}
+    const updateFixture = (e) => {
+        e.preventDefault()
+        const latestFixture = { ...fixture, entryfee: Number(prizeRef.current.value) }
+        setFixture(latestFixture)
+        addRoundFromFixture(latestFixture)
+    }
 
     return(
         <>
             <h3>Crear Tarjeta</h3>
             <button onClick={handleClick}>Generar próxima fecha</button>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={updateFixture}>
                 <label htmlFor="prize"> Valor de tarjeta
                     <input type="number" ref={prizeRef} name="card-prize" id="prize"/>
                 </label>

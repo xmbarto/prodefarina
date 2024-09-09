@@ -3,7 +3,7 @@ const API_KEY = 'aa0007933ae266382185d14057bf4dcf'
 const A_LEAGUE_ID = 128
 const CURRENT_SEASON = 2024
 const TIMEZONE = "America/Buenos Aires"
-const ROUND = "Round - 15"
+const ROUND = "Round - 16"
 
 
 export const searchFixtures = async () => {
@@ -17,7 +17,7 @@ export const searchFixtures = async () => {
         })
 
         if (!response.ok) {
-            throw new Error('mmm el server está cagado, no responde el gil');
+            throw new Error('mmm la api está cagada y no responde');
         }
         const json = await response.json()
         const currentRound = {
@@ -45,7 +45,7 @@ export const searchFixtures = async () => {
         return currentRound
 
     } catch (e) {
-        console.log('Acá algo de cagó, saltó este error: ', e)
+        console.log('Acá algo se cagó, saltó este error: ', e)
         throw new Error('Error del servicio')
     }
 }
