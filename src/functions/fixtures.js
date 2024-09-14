@@ -1,14 +1,13 @@
 
 const API_KEY = 'aa0007933ae266382185d14057bf4dcf'
 const A_LEAGUE_ID = 128
-const CURRENT_SEASON = 2024
+const CURRENT_SEASON = new Date().getFullYear()
 const TIMEZONE = "America/Buenos Aires"
-const ROUND = "Round - 16"
 
 
 export const searchFixtures = async () => {
     try{
-        const response = await fetch(`https://v3.football.api-sports.io/fixtures?league=${A_LEAGUE_ID}&season=${CURRENT_SEASON}&round=${ROUND}&timezone=${TIMEZONE}`,{
+        const response = await fetch(`https://v3.football.api-sports.io/fixtures?league=${A_LEAGUE_ID}&season=${CURRENT_SEASON}&timezone=${TIMEZONE}`,{
             method: 'GET',
             headers:{
                 "x-rapidapi-host": "v3.football.api-sports.io",
@@ -20,12 +19,33 @@ export const searchFixtures = async () => {
             throw new Error('mmm la api está cagada y no responde');
         }
         const json = await response.json()
+
+        function getRoundNumber(round) {
+            const roundMatch = round.match(/(\d+)\s*$/)
+            return roundMatch ? parseInt(roundMatch[1], 10) : null
+        }
+
+        //filtrar y traer solo los partidos que ya terminaron
+        const finishedMatches = json.response.filter(match => match.fixture.status.short == 'FT')
+        
+        // de los partidos que ya terminaron, encontrar el que tenga fixture.date mas reciente
+        const lastFinished = finishedMatches.sort((a, b) => new Date(b.fixture.date) - new Date(a.fixture.date))[0]
+
+        //obtenr el round del partido
+        const lastRoundNumber = getRoundNumber(lastFinished.league.round)
+
+        //obtener los partidos de la próxima fecha
+        const nextRound = json.response.filter(match => {
+            const roundNumber = getRoundNumber(match.league.round)
+            return roundNumber === lastRoundNumber + 1
+        })
+        
         const currentRound = {
-            roundnumber: json.response[0].league.round.split(' ').pop(),
-            year: json.response[0].league.season,
+            roundnumber: nextRound[0].league.round.split(' ').pop(),
+            year: nextRound[0].league.season,
             entryfee: null,
             jackpot: null,
-            matches: json.response.map(match => ({
+            matches: nextRound.map(match => ({
                 id: match.fixture.id,
                 home: {
                     id: match.teams.home.id,
@@ -49,17 +69,3 @@ export const searchFixtures = async () => {
         throw new Error('Error del servicio')
     }
 }
-
-// rounds
-//   |
-//   └── round-id
-//         ├── roundnumber -> round
-//         ├── year -> year
-//         ├── entryfee -> empty
-//         ├── jackpot -> empty
-//         ├── matches
-//               ├── match-id-1
-//                     |away -> away.name
-//                     |home -> home.name
-//                     |date -> date
-//                     |winner -> null

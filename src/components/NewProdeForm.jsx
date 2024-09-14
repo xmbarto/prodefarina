@@ -1,7 +1,6 @@
 import { useRef, useState } from "react"
 import { searchFixtures } from "../functions/fixtures"
 import { addRoundFromFixture } from "../../firebase/firebaseFunctions"
-// import { utcToZonedTime, format } from 'date-fns-tz';
 
 export function NewProdeForm() {
     const [fixture, setFixture] = useState([])
