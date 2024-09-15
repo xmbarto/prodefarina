@@ -2,7 +2,7 @@ import { useRef, useState } from "react"
 import { searchFixtures } from "../functions/fixtures"
 import { addRoundFromFixture } from "../../firebase/firebaseFunctions"
 
-export function NewProdeForm() {
+export function ProdeForm() {
     const [fixture, setFixture] = useState([])
     const [loading, setLoading] = useState(false)
     const [showDetails, setShowDetails] = useState(false)
