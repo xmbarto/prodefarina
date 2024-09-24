@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const SingleProdeGame = ({homeTeam, awayTeam, handleDoubleChance, numWithTwoSelected, handleReadyToPlay}) => {
+const SingleProdeGame = ({home, away, handleDoubleChance, numWithTwoSelected, handleReadyToPlay}) => {
     
     const [selected, setSelected] = useState({
         home: false,
@@ -33,32 +33,32 @@ const SingleProdeGame = ({homeTeam, awayTeam, handleDoubleChance, numWithTwoSele
                 <input 
                     type="checkbox"
                     name="home"
-                    id={homeTeam}
+                    id={home}
                     onChange={handleChange}
                     checked={selected.home}
                     disabled={selected.home ? false : numWithTwoSelected > 0 && Object.values(selected).filter(val => val).length === 1 || selected.draw && selected.away}
                 />
-                <label htmlFor={homeTeam}>{homeTeam}</label>
+                <label htmlFor={home}>{home}</label>
                 
                 <input 
                     type="checkbox"
                     name="draw"
-                    id={"D"+homeTeam}
+                    id={"D"+home}
                     onChange={handleChange}
                     checked={selected.draw}
                     disabled={selected.draw ? false : numWithTwoSelected > 0 && Object.values(selected).filter(val => val).length === 1 || selected.home && selected.away}
                 />
-                <label htmlFor={"D"+homeTeam}>Empate</label>
+                <label htmlFor={"D"+home}>Empate</label>
                 
                 <input 
                     type="checkbox"
                     name="away"
-                    id={awayTeam}
+                    id={away}
                     onChange={handleChange}
                     checked={selected.away}
                     disabled={selected.away ? false : numWithTwoSelected > 0 && Object.values(selected).filter(val => val).length === 1 || selected.draw && selected.home}
                 />
-                <label htmlFor={awayTeam}>{awayTeam}</label>
+                <label htmlFor={away}>{away}</label>
             </div>
     )
 }

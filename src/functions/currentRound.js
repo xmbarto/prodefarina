@@ -11,7 +11,7 @@ export const createCurrentRound = (apiresponse) => {
     // de los partidos que ya terminaron, encontrar el que tenga fixture.date mas reciente
     const lastFinished = finishedMatches.sort((a, b) => new Date(b.fixture.date) - new Date(a.fixture.date))[0]
 
-    //obtenr el round del partido
+    //obtenr el round del partido más reciente
     const lastRoundNumber = getRoundNumber(lastFinished.league.round)
 
     //obtener los partidos de la próxima fecha
@@ -25,6 +25,8 @@ export const createCurrentRound = (apiresponse) => {
         year: nextRound[0].league.season,
         entryfee: null,
         jackpot: null,
+        status: 'open',
+        players:[],
         matches: nextRound.map(match => ({
             id: match.fixture.id,
             home: {

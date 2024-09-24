@@ -24,7 +24,6 @@ export const searchFixtures = async () => {
 
         return createCurrentRound(json.response)
 
-
     } catch (e) {
         console.log('Acá algo se cagó, saltó este error: ', e)
         throw new Error('Error del servicio')

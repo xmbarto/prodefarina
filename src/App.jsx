@@ -6,6 +6,7 @@ import Admin from './pages/Admin'
 
 
 const App = () => {
+
     return(
         <>
             <header>
@@ -19,16 +20,12 @@ const App = () => {
                 <li>
                     <Link to="/pages/admin">Admin</Link>
                 </li>
-                {/* <li>
-                    <Link to="/pages/play">Jugar</Link>
-                </li> */}
             </ul>
            </nav>
-           <Routes>
-                <Route path="/" element={<Home />}/>
-                <Route path="/pages/admin" element={<Admin />}/>
-                {/* <Route path="/pages/play" element={<Play />}/> */}
-           </Routes>
+                <Routes>
+                        <Route path="/" element={<Home />}/>
+                        <Route path="/pages/admin" element={<Admin />}/>
+                </Routes>
         </>
     )
 }
