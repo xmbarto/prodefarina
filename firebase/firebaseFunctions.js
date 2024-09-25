@@ -27,17 +27,3 @@ export const addRoundFromFixture = async (fixture) => {
     }
 }
 
-// rounds
-//   |
-//   └── round-id
-//         ├── roundnumber -> round
-//         ├── year -> year
-//         ├── entryfee -> empty
-//         ├── jackpot -> empty
-//         ├── matches
-//               ├── match-id-1
-//                     |away -> away.name
-//                     |home -> home.name
-//                     |date -> date
-//                     |winner -> null
-

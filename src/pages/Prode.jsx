@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react'
-import SingleProdeGame from '../components/SingleProdeGame'
+import SingleProdeGame from '../components/play/SingleProdeGame'
 
 const Prode = () => {
     const currentGame = actualFixture?.matches
