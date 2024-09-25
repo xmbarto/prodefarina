@@ -1,5 +1,6 @@
-import { Link, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
+import Header from './components/shared/Header'
 import Home from './pages/Home'
 import Admin from './pages/Admin'
 
@@ -8,25 +9,16 @@ import Admin from './pages/Admin'
 const App = () => {
 
     return(
-        <>
-            <header>
-                <h1>Prodemaster</h1>
-            </header>
-           <nav>
-            <ul>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/pages/admin">Admin</Link>
-                </li>
-            </ul>
-           </nav>
+        <Router>
+            <Header />
+            <main>
                 <Routes>
-                        <Route path="/" element={<Home />}/>
-                        <Route path="/pages/admin" element={<Admin />}/>
-                </Routes>
-        </>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/pages/admin" element={<Admin />} />
+                </Routes>    
+            </main>
+        </Router>
+        
     )
 }
 
