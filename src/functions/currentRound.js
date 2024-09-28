@@ -25,7 +25,7 @@ export const createCurrentRound = (apiresponse) => {
         year: nextRound[0].league.season,
         entryfee: null,
         jackpot: null,
-        status: 'open',
+        status: 'OP',
         players:[],
         matches: nextRound.map(match => ({
             id: match.fixture.id,
