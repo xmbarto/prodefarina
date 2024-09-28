@@ -1,4 +1,4 @@
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc, getDocs } from "firebase/firestore"; 
 import { db } from "./firebaseConfig";
 
 
@@ -25,5 +25,17 @@ export const addRoundFromFixture = async (fixture) => {
     } catch (e) {
         console.error("Error adding document: ", e)
     }
+}
+
+// Obtener data de round open y retornar el round en un objeto
+export const getOpenRound = async () => {
+    const querySnapshot = await getDocs(collection(db, "rounds"));
+    let openRound
+    querySnapshot.forEach((doc) => {
+        if(doc.data().status === 'OP'){
+            openRound = doc.data()
+        }
+    });
+    return openRound
 }
 

@@ -1,10 +1,21 @@
 
 import { useEffect, useState } from 'react'
 import SingleProdeGame from '../components/play/SingleProdeGame'
+import { getOpenRound } from '../../firebase/firebaseFunctions'
 
 const Prode = () => {
-    const currentGame = actualFixture?.matches
-    console.log(currentGame)
+    const [openGame, setOpenGame] = useState({})
+
+    useEffect(() => {
+        const fetchOpenGame = async () => {
+            const openGame = await getOpenRound()
+            setOpenGame(openGame)
+        }
+        fetchOpenGame()
+    },[])
+
+    const currentGame = openGame?.matches
+    const actualFixture = openGame
 
     const [numWithTwoSelected, setNumWithTwoSelected] = useState(0)
     const [countSelected, setCountSelected] = useState(0)
