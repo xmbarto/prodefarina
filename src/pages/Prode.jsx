@@ -4,23 +4,23 @@ import SingleProdeGame from '../components/play/SingleProdeGame'
 import { getOpenRound } from '../../firebase/firebaseFunctions'
 
 const Prode = () => {
-    const [openGame, setOpenGame] = useState({})
-
-    useEffect(() => {
-        const fetchOpenGame = async () => {
-            const openGame = await getOpenRound()
-            setOpenGame(openGame)
-        }
-        fetchOpenGame()
-    },[])
-
-    const currentGame = openGame?.matches
-    const actualFixture = openGame
-
+    const [openGame, setOpenGame] = useState(null)
     const [numWithTwoSelected, setNumWithTwoSelected] = useState(0)
     const [countSelected, setCountSelected] = useState(0)
     const [readyToPlay, setReadyToPlay] = useState(false)
 
+    useEffect(() => {
+        const fetchOpenGame = async () => {
+            try{
+                const newGame = await getOpenRound()
+                setOpenGame(newGame)
+                console.log(newGame)
+            } catch (err) {
+                console.error(err.message)
+            }
+        }
+        fetchOpenGame()
+    },[])
     
     const handleDoubleChance = (hasTwo) => {
         setNumWithTwoSelected(prev => hasTwo ? prev + 1 : prev - 1)
@@ -31,26 +31,28 @@ const Prode = () => {
     }
 
     useEffect(() => {
-        const checksToPlay = currentGame.length + 1
-        if(countSelected === checksToPlay){
-            setReadyToPlay(prevReady => !prevReady)
-        } else {
-            setReadyToPlay(false)
+        if(openGame && openGame.matches){
+            const checksToPlay = openGame.matches.length + 1
+            if(countSelected === checksToPlay){
+                setReadyToPlay(true)
+            } else {
+                setReadyToPlay(false)
+            }
         }
-    },[countSelected, currentGame])
+    },[countSelected, openGame])
 
     return(
         <>
             {
-            actualFixture ? 
+            openGame && openGame.matches ? 
                 <div>
                     <section className='pl-settings'>
-                        <h2>Fecha <span>{actualFixture.roundnumber}</span></h2>
+                        <h2>Fecha <span>{openGame.roundnumber}</span></h2>
                         <h3>Cierre: <span>Viernes 18hs</span></h3>
                     </section>
                     <section className='pl-game'>
                         <input type="text" placeholder='Nombre'/>
-                        {currentGame.map(({id, home, away}) => (
+                        {openGame.matches.map(({id, home, away}) => (
                             <SingleProdeGame
                                 key={id}
                                 home={home.name}
