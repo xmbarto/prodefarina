@@ -41,7 +41,9 @@ export const createCurrentRound = (apiresponse) => {
                 winner: match.teams.away.winner,
                 logo: match.teams.away.logo
             }
-        }))
+        })),
+        
+        predictions: {}
     }
     
     return currentRound

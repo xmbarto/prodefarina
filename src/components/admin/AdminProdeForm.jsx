@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { searchFixtures } from "../../functions/fixtures"
+import { fetchAndProcessFixtures } from "../../functions/fetchAndCreateFixture" 
 import { addRoundFromFixture } from "../../../firebase/firebaseFunctions"
 
 export function AdminProdeForm() {
@@ -12,7 +12,7 @@ export function AdminProdeForm() {
     const handleClick = async () => {
         setLoading(true)
         try {
-            const lastFixture = await searchFixtures()
+            const lastFixture = await fetchAndProcessFixtures()
             setFixture(lastFixture)
             setShowDetails(true)
 
