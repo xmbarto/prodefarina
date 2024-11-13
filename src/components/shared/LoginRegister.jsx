@@ -1,60 +1,33 @@
 import { useState } from 'react'
-import { auth, provider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword  } from '../../../firebase/firebaseConfig'
+import { auth, provider, signInWithPopup } from '../../../firebase/firebaseConfig'
 
 const LoginRegister = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [isRegistering, setIsRegistering] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
     const handleGoogleLogin = async () => {
+        setLoading(true)
+        setError(null)
         try {
             await signInWithPopup(auth, provider)
-        }   catch (err) {
-            setError(err.message)
+            // Aquí podrías agregar lógica adicional, como redireccionar al usuario.
+        } catch (err) {
+            setError('Hubo un problema al iniciar sesión con Google.', err)
+        } finally {
+            setLoading(false);
         }
-    }
-
-    const handleEmailPassAuth = async (e) => {
-        e.preventDefault()
-        if(isRegistering) {
-            try {
-                await createUserWithEmailAndPassword(auth, email, password)
-            } catch (err) {
-                setError(err.message)
-            }
-        } else {
-            try {
-                await signInWithEmailAndPassword(auth, email, password)
-            } catch (err) {
-                setError(err.message)
-            }
-        }
-    }
+    };
 
     return (
         <div>
-            <h2>{isRegistering ? 'Registrarse' : 'Iniciar sesión'}</h2>
-            <form onSubmit={handleEmailPassAuth}>
-                <input 
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder='Email'
-                />
-                <input 
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder='Password'
-                />
-                <button type='submit'>{ isRegistering ? 'Registrarse' : 'Iniciar sesión' }</button>
-            </form>
-            <button onClick={handleGoogleLogin}>Inicia sesion con Google</button>
-            <p onClick={() => setIsRegistering(!isRegistering)}>
-                {isRegistering ? '¿Ya tienes una cuenta? Inicia sesión' : '¿No tienes una cuenta? Regístrate'}
-            </p>
-            {error && <p>{error}</p>}
+            <button 
+                className='home-login-button'
+                onClick={handleGoogleLogin} 
+                disabled={loading}
+            > 
+                {loading ? 'Cargando...' : 'Inicia sesión con Google para jugar'}
+            </button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     )
 }

@@ -2,6 +2,18 @@ input:focus {
     box-shadow: none;
 }
 
+/* Home */
+
+.home-login-button{
+    background-color: #ff2a00;
+    border-color: #ff2a00;
+    color: #0c151c;
+    padding: 10px 15px;
+    color: #fff;
+}
+
+/* Prode */
+
 .shareable-card{
     background-color: #202b38;
     padding: 20px;
