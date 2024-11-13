@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import SingleProdeGame from '../components/play/SingleProdeGame'
 import { getOpenRound, updateOpenRound } from '../../firebase/firebaseFunctions'
 import { createUserId } from '../functions/createUserId'
+import { createShareableImg } from '../functions/createShareableImg'
 
 
 const Prode = () => {
@@ -66,6 +67,19 @@ const Prode = () => {
         }
     },[countSelected, openGame, userName])
 
+    // Genera la imagen de la tarjeta
+    const handleGenerateImg = async () => {
+        try {
+            const imgData = await createShareableImg('#shareable-card')
+            const link = document.createElement('a');
+            link.href = imgData;
+            link.download = `${userName}-prode.png`
+            link.click();
+        } catch (e) {
+            console.error('Error al generar la imagen, error: ', e)
+        }
+    }
+
     // Actualiza la tarjeta
     const updateFixture = async (e) => {
         e.preventDefault()
@@ -113,21 +127,35 @@ const Prode = () => {
                             <h3>Precio de la tarjeta: <span>${openGame.entryfee}</span></h3>
                         </section>
                     <form onSubmit={updateFixture}>
-                        <input type="text" placeholder='Nombre' onChange={handleChange}/>
-                        {openGame.matches.map(({id, home, away}) => (
-                            <SingleProdeGame
-                                key={id}
-                                home={home.name}
-                                away={away.name}
-                                handleDoubleChance={handleDoubleChance}
-                                numWithTwoSelected={numWithTwoSelected}
-                                handleReadyToPlay={handleReadyToPlay}
-                                handlePredictions={handlePredictions}
-                                predictions={predictions}
-                                id={id}
+                        <div id='shareable-card' className='shareable-card'>
+                            <input 
+                                className='prode-user-name'
+                                type="text" 
+                                placeholder='Nombre' 
+                                onChange={handleChange}
                             />
-                        ))}
-                        <button disabled={!readyToPlay}>Enviar tarjeta</button>
+                            <div className='prode-matches'>
+                                {openGame.matches.map(({id, home, away}) => (
+                                    <SingleProdeGame
+                                        key={id}
+                                        home={home.name}
+                                        away={away.name}
+                                        handleDoubleChance={handleDoubleChance}
+                                        numWithTwoSelected={numWithTwoSelected}
+                                        handleReadyToPlay={handleReadyToPlay}
+                                        handlePredictions={handlePredictions}
+                                        predictions={predictions}
+                                        id={id}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                        <button
+                            className='prode-send-button' 
+                            disabled={!readyToPlay}
+                            onClick={handleGenerateImg}
+                        > Enviar tarjeta
+                        </button>
                     </form>
                 </div> 
             : <h3>cargando fecha...</h3>

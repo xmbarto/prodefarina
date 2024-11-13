@@ -55,6 +55,7 @@ const SingleProdeGame = ({id, home, away, handleDoubleChance, numWithTwoSelected
     return(
             <div id={id}>
                 <input 
+                    className="prode-checkbox home-checkbox"
                     type="checkbox"
                     name="home"
                     id={home}
@@ -62,9 +63,10 @@ const SingleProdeGame = ({id, home, away, handleDoubleChance, numWithTwoSelected
                     checked={selected.home}
                     disabled={selected.home ? false : numWithTwoSelected > 0 && Object.values(selected).filter(val => val).length === 1 || selected.draw && selected.away}
                 />
-                <label htmlFor={home}>{home}</label>
+                <label className="prode-label home-label" htmlFor={home}>{home}</label>
                 
                 <input 
+                    className="prode-checkbox draw-checkbox"
                     type="checkbox"
                     name="draw"
                     id={"D"+home}
@@ -72,9 +74,10 @@ const SingleProdeGame = ({id, home, away, handleDoubleChance, numWithTwoSelected
                     checked={selected.draw}
                     disabled={selected.draw ? false : numWithTwoSelected > 0 && Object.values(selected).filter(val => val).length === 1 || selected.home && selected.away}
                 />
-                <label htmlFor={"D"+home}>Empate</label>
+                <label className="prode-label draw-label" htmlFor={"D"+home}>E</label>
                 
                 <input 
+                    className="prode-checkbox away-checkbox"
                     type="checkbox"
                     name="away"
                     id={away}
@@ -82,7 +85,7 @@ const SingleProdeGame = ({id, home, away, handleDoubleChance, numWithTwoSelected
                     checked={selected.away}
                     disabled={selected.away ? false : numWithTwoSelected > 0 && Object.values(selected).filter(val => val).length === 1 || selected.draw && selected.home}
                 />
-                <label htmlFor={away}>{away}</label>
+                <label className="prode-label away-label" htmlFor={away}>{away}</label>
             </div>
     )
 }

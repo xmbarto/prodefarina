@@ -1,0 +1,89 @@
+input:focus {
+    box-shadow: none;
+}
+
+.shareable-card{
+    background-color: #202b38;
+    padding: 20px;
+    border: 1px solid;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.prode-matches div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+}
+
+.prode-matches .prode-label{
+    font-size: 12px;
+    margin: 0;
+}
+
+.prode-matches .home-label, .prode-matches .away-label{
+    width: 37%;
+}
+
+.prode-matches .draw-label{
+    width: 10%;
+}
+
+.prode-matches .away-label{
+    text-align: end;
+    order: 1;
+}
+
+.prode-matches .away-checkbox{
+    order: 2;
+}
+
+.prode-matches input[type="checkbox"] {
+    appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border: 2px solid #333;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.prode-matches input[type="checkbox"]:checked {
+    background-color: #00ff66; 
+    border-color: #00ff66;
+  }
+
+ .prode-matches input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 2px;
+    width: 8px;
+    height: 8px;
+    background-color: white; /* Color del check */
+    border-radius: 2px;
+  }
+
+  .prode-matches input[type="checkbox"]:checked + label {
+    color: #00ff66;
+    font-weight: 500;
+  }
+
+.prode-user-name{
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 0;
+    margin-bottom: 30px;
+}
+
+.prode-send-button:hover{
+    float: right;
+    background-color: #00ff66;
+    border-color: #00ff66;
+    color: #0c151c;
+}
