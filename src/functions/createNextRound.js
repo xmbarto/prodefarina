@@ -1,5 +1,10 @@
 
-export const createCurrentRound = (apiresponse) => {
+import { fetchFixtures } from "./fetchFixtures"
+
+export const createNextRound = async () => {
+    
+    const apiresponse = await fetchFixtures()
+
     function getRoundNumber(round) {
         const roundMatch = round.match(/(\d+)\s*$/)
         return roundMatch ? parseInt(roundMatch[1], 10) : null

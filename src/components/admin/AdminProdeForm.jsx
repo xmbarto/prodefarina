@@ -1,8 +1,8 @@
 import { useRef, useState } from "react"
-import { fetchAndProcessFixtures } from "../../functions/fetchAndCreateFixture" 
+import { createNextRound } from "../../functions/createNextRound"
 import { addRoundFromFixture } from "../../../firebase/firebaseFunctions"
 
-export function AdminProdeForm() {
+const AdminProdeForm =() => {
     const [fixture, setFixture] = useState([])
     const [loading, setLoading] = useState(false)
     const [showDetails, setShowDetails] = useState(false)
@@ -12,7 +12,7 @@ export function AdminProdeForm() {
     const handleClick = async () => {
         setLoading(true)
         try {
-            const lastFixture = await fetchAndProcessFixtures()
+            const lastFixture = await createNextRound()
             setFixture(lastFixture)
             setShowDetails(true)
 
@@ -23,10 +23,17 @@ export function AdminProdeForm() {
         }
     }
 
-    const updateFixture = (e) => {
+    const updateFixture = async (e) => {
         e.preventDefault()
-        const latestFixture = { ...fixture, entryfee: Number(prizeRef.current.value) }
+        const entryFeeValue = Number(prizeRef.current.value)
+        const latestFixture = { ...fixture, entryfee: entryFeeValue }
         setFixture(latestFixture)
+
+        try{
+            await addRoundFromFixture(latestFixture)
+        } catch (e) {
+            console.error('Error al agregar el Fixture a la base de datos: ', e)
+        }
         addRoundFromFixture(latestFixture)
     }
 
@@ -66,3 +73,5 @@ export function AdminProdeForm() {
         </>
     )
 }
+
+export default AdminProdeForm
