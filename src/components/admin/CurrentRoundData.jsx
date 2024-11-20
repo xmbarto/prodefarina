@@ -8,14 +8,7 @@ const CurrentRoundData = () => {
     const handleClick = async () => {
         try {
             const currentFixtures = await createCurrentRanking()
-
-            // Comprobar si hay partidos terminados
-            const hasFinishedMatches = currentFixtures.some(match => 
-                match.fixture.status.short === 'FT' ||
-                match.fixture.status.short === 'AET' ||
-                match.fixture.status.short === 'PEN'
-            )
-            setIsOpenRound(hasFinishedMatches)
+            console.log(currentFixtures)
 
             
         } catch (e) {

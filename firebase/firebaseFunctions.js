@@ -1,4 +1,4 @@
-import { collection, doc, addDoc, getDocs, getDoc, setDoc, query, where } from "firebase/firestore"; 
+import { collection, addDoc, getDocs } from "firebase/firestore"; 
 import { db } from "./firebaseConfig";
 
 
@@ -15,29 +15,9 @@ export const addPlayer = async (name) => {
    }
 }
 
-// Add a round from fixture data 
-export const addRoundFromFixture = async (fixture) => {
-    try {
-        const roundsRef = await collection(db, "rounds")
-        const q = query(roundsRef, where('status', '==', 'OP'))
-        const querySnapshot = await getDocs(q)
-        if(!querySnapshot.empty){
-            console.log('Ya hay un round abierto')
-            return
-        }
-        const roundRef = await addDoc(collection(db, "rounds"), {
-            ...fixture
-        })
-        console.log("Document written with ID: ", roundRef.id)
-
-    } catch (e) {
-        console.error("Error adding document: ", e)
-    }
-}
-
-// Obtener data de round open y retornar el round en un objeto
+// Obtener data de round OP y retornar el round en un objeto
 export const getOpenRound = async () => {
-    const querySnapshot = await getDocs(collection(db, "rounds"));
+    const querySnapshot = await getDocs(collection(db, "rounds"))
     let openRound
     querySnapshot.forEach((doc) => {
         if(doc.data().status === 'OP'){
@@ -47,23 +27,33 @@ export const getOpenRound = async () => {
     return openRound
 }
 
-// Actualizar data de round open con información que viene de otro componente
-export const updateOpenRound = async (round) => {
-    try {
-        const roundRef = collection(db, "rounds")
-        const q = query(roundRef, where('status', '==', 'OP'))
-        const querySnap = await getDocs(q)
 
-        if(!querySnap.empty){
-            const roundDoc = querySnap.docs[0]
-            const roundRef = roundDoc.ref
-            await setDoc(roundRef, {
-                ...round
-            }, { merge: true })
-            console.log("Document updated with ID: ", roundRef.id)
+// Obtener data de round OG y retornar el round en un objeto
+export const getOngoingRound = async () => {
+    const querySnapshot = await getDocs(collection(db, "rounds"))
+    let ongoingRound
+    querySnapshot.forEach((doc) => {
+        if(doc.data().status === 'OG'){
+            ongoingRound = doc.data()
         }
-    } catch (e) {
-        console.error("Error adding document: ", e)
-    }
+    });
+    return ongoingRound
 }
+
+// Obtener data de round FI y retornar el round en un objeto
+export const getFinishedRound = async () => {
+    const querySnapshot = await getDocs(collection(db, "rounds"))
+    let finishedRound
+    querySnapshot.forEach((doc) => {
+        if(doc.data().status === 'FI'){
+            finishedRound = doc.data()
+        }
+    });
+    return finishedRound
+}
+
+
+
+
+
 

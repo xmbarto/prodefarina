@@ -93,8 +93,11 @@ input:focus {
     margin-bottom: 30px;
 }
 
-.prode-send-button:hover{
+.prode-send-button{
     float: right;
+}
+
+.prode-send-button:active:hover{
     background-color: #00ff66;
     border-color: #00ff66;
     color: #0c151c;

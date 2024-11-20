@@ -1,7 +1,8 @@
 
 import { useEffect, useState } from 'react'
 import SingleProdeGame from '../components/play/SingleProdeGame'
-import { getOpenRound, updateOpenRound } from '../../firebase/firebaseFunctions'
+import { getOpenRound } from '../../firebase/firebaseFunctions'
+import { updateFullRound } from '../../firebase/updateRounds'
 import { createUserId } from '../functions/createUserId'
 import { createShareableImg } from '../functions/createShareableImg'
 
@@ -97,20 +98,30 @@ const Prode = () => {
                     id: newUserId,
                     name: e.target[0].value,
                     category: 'amateur',
-                    hits: null,
+                }
+            ],
+            predictions: [
+                ...openGame.predictions,
+                {
+                    name: userName,
+                    predictions: [
+                        ...predictions
+                    ]
+                }
+            ],
+            ranking: [
+                ...openGame.ranking,
+                {
+                    name: userName,
+                    hits: 0,
+                    correctPredictions: [],
                     isWinner: false,
                     reward: null
                 }
-            ],
-            predictions: {
-                ...openGame.predictions,
-                [userName]:{
-                    ...predictions
-                }
-            }
+            ]
         }
 
-        await updateOpenRound(updatedFixture)
+        await updateFullRound(updatedFixture)
         setPredictions([])
         setOpenGame(updatedFixture)
         setReadyToPlay(false)

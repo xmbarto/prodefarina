@@ -48,7 +48,8 @@ export const createNextRound = async () => {
             }
         })),
         
-        predictions: {}
+        predictions: [],
+        ranking: []
     }
     
     return currentRound

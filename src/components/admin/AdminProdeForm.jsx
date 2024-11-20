@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { createNextRound } from "../../functions/createNextRound"
-import { addRoundFromFixture } from "../../../firebase/firebaseFunctions"
+import { addRoundFromFixture } from "../../../firebase/updateRounds"
 
 const AdminProdeForm =() => {
     const [fixture, setFixture] = useState([])
@@ -34,7 +34,6 @@ const AdminProdeForm =() => {
         } catch (e) {
             console.error('Error al agregar el Fixture a la base de datos: ', e)
         }
-        addRoundFromFixture(latestFixture)
     }
 
     return(
