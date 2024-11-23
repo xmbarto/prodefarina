@@ -39,12 +39,13 @@ const AdminProdeForm =() => {
     return(
         <>
             <div>
-                <h3>Este botón es para crear la tarjeta</h3>
-                <button onClick={handleClick}>Generar próxima fecha</button>
-                <form onSubmit={updateFixture}>
-                    <label htmlFor="prize"> Precio de la tarjeta pero sin el $
-                        <input type="number" ref={prizeRef} name="card-prize" id="prize"/>
+                <h3>Crear próxima fecha</h3>
+                <form className="admin-form" onSubmit={updateFixture}>
+                    <label className="admin-form-prize-label" htmlFor="prize"> Precio del prode
+                    <span className="admin-form-prize-prefix">$</span>
+                        <input className="admin-form-prize-input" type="number" ref={prizeRef} name="card-prize" id="prize"/>
                     </label>
+                    <button className="admin-form-get-round" onClick={handleClick}>Generar próxima fecha</button>
                     <div>
                         {showDetails && (
                             <>

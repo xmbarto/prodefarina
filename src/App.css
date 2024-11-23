@@ -2,7 +2,7 @@ input:focus {
     box-shadow: none;
 }
 
-/* Home */
+/* HOME */
 
 .home-login-button{
     background-color: #ff2a00;
@@ -12,7 +12,7 @@ input:focus {
     color: #fff;
 }
 
-/* Prode */
+/* PRODE */
 
 .shareable-card{
     background-color: #202b38;
@@ -87,10 +87,13 @@ input:focus {
   }
 
 .prode-user-name{
-    background-color: transparent;
-    padding: 10px;
-    border-radius: 0;
+    background-color: rgb(255, 255, 255);
     margin-bottom: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    color: #202b38;
+    font-weight: 800;
+    font-size: larger
 }
 
 .prode-send-button{
@@ -101,4 +104,34 @@ input:focus {
     background-color: #00ff66;
     border-color: #00ff66;
     color: #0c151c;
+}
+
+/* ADMIN */
+
+.admin-form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.admin-form-prize-label{
+    position: relative;
+}
+
+.admin-form-prize-input{
+    padding-left: 20px;
+}
+
+.admin-form-prize-prefix{
+    content: '$';
+    position: absolute;
+    top: 63%;
+    left: 5px;
+    transform: translateY(-50%);
+    color: #ffffff; /* Color del prefijo */
+    font-size: 16px;
+}
+
+.admin-form-get-round{
+    width: fit-content;
 }
