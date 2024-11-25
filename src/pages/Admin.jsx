@@ -1,11 +1,11 @@
 import AdminProdeForm from "../components/admin/AdminProdeForm"
-import CurrentRoundData from "../components/admin/CurrentRoundData"
+import CurrentRoundRanking from "../components/admin/CurrentRoundRanking"
 
 const Admin = () => {
     return(
         <>
             <AdminProdeForm/>
-            <CurrentRoundData/>
+            <CurrentRoundRanking/>
         </>
     )
 }
