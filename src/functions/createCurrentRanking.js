@@ -7,15 +7,13 @@ export const createCurrentRanking = async () => {
         const currentFixtures = await createCurrentFixture()
         
         //Evaluar si hay partidos terminados
-        const areFinishedMatches = currentFixtures.map(match => {
-            if (match.fixture.status.short === 'FT' || match.fixture.status.short === 'AET' || match.fixture.status.short === 'PEN') {
-                return match
-            } else {
-                return null
-            }
-        })
+        const areFinishedMatches = currentFixtures.filter(match => 
+            match.fixture.status.short === 'FT' || 
+            match.fixture.status.short === 'AET' || 
+            match.fixture.status.short === 'PEN'
+        )
 
-        if (areFinishedMatches.some(match => match !== null)) {
+        if (areFinishedMatches.length > 0) {
             
             //Actualizar el status del round
             const roundNumber = areFinishedMatches[0].league.round.split(' ').pop()
@@ -23,7 +21,7 @@ export const createCurrentRanking = async () => {
             
             //Devolver un array con los resultados de los partidos terminados
             const results = areFinishedMatches.map(match => {
-                const findWinner = Object.entries(match).find(([key, value]) => value === true)?.[0]
+                const findWinner = Object.entries(match.teams).find(([key, team]) => team.winner === true)?.[0]
                 return findWinner ? 
                 {
                     [findWinner]: true,
@@ -34,7 +32,6 @@ export const createCurrentRanking = async () => {
                     id: match.fixture.id
                 } 
             })
-            console.log(results)
             
             //Traer el round ongoing
             const ongoingGame = await getOngoingRound()
@@ -71,13 +68,15 @@ export const createCurrentRanking = async () => {
                 }
             })
 
-            console.log(ranking)
+            return ranking
             
         } else {
             console.log('no hay partidos terminados')
+            return []
         }
 
     } catch (e) {
-            console.error(e.message)
+        console.error(e.message)
+        throw new Error('Error al crear el Ranking')
     }
 }
