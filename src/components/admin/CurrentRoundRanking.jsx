@@ -1,6 +1,5 @@
-
-import { createCurrentRanking } from "../../functions/createCurrentRanking"
-import { useEffect, useState } from "react"
+import { createCurrentRanking } from '../../functions/createCurrentRanking'
+import { useEffect, useState } from 'react'
 
 const CurrentRoundRanking = () => {
     const [ranking, setRanking] = useState([])
@@ -23,7 +22,6 @@ const CurrentRoundRanking = () => {
         updateRanking()
     }, [])
     
-
     return (
         <>
             <h3>Ranking de la fecha</h3>
@@ -44,7 +42,7 @@ const CurrentRoundRanking = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {ranking.map(({name, hits}) => (
+                            {ranking.map(({ name, hits }) => (
                                 <tr key={name}>
                                     <td>{name}</td>
                                     <td>{hits}</td>

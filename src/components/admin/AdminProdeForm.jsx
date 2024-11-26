@@ -2,7 +2,7 @@ import { useRef, useState } from "react"
 import { createNextRound } from "../../functions/createNextRound"
 import { addRoundFromFixture } from "../../../firebase/updateRounds"
 
-const AdminProdeForm =() => {
+const AdminProdeForm = () => {
     const [fixture, setFixture] = useState([])
     const [loading, setLoading] = useState(false)
     const [showDetails, setShowDetails] = useState(false)
