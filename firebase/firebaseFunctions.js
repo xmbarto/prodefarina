@@ -1,6 +1,25 @@
-import { collection, addDoc, getDocs } from "firebase/firestore"; 
+import { collection, doc, addDoc, setDoc, getDoc, getDocs } from "firebase/firestore"; 
 import { db } from "./firebaseConfig";
 
+
+//check if the user exist
+export const checkUser = async ( user ) => {
+    try{
+        const userDoc = doc(db, 'users', user.uid)
+        const docSnapshot = await getDoc(userDoc)
+    
+        if(!docSnapshot.exists()) {
+            await setDoc(userDoc, { 
+                role: 'player',
+                email: user.email
+            })
+        }
+        return docSnapshot.data().role
+
+    } catch (e) {
+        console.error('Error durante el registro:', e)
+    }
+}
 
 // Add a player
 export const addPlayer = async (name) => {

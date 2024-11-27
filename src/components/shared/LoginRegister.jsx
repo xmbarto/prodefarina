@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { auth, provider, signInWithPopup } from '../../../firebase/firebaseConfig'
+import { checkUser } from '../../../firebase/firebaseFunctions'
 
 const LoginRegister = () => {
     const [loading, setLoading] = useState(false)
@@ -9,14 +10,15 @@ const LoginRegister = () => {
         setLoading(true)
         setError(null)
         try {
-            await signInWithPopup(auth, provider)
-            // Aquí podrías agregar lógica adicional, como redireccionar al usuario.
+            const result = await signInWithPopup(auth, provider)
+            const user = result.user
+            await checkUser(user)
         } catch (err) {
             setError('Hubo un problema al iniciar sesión con Google.', err)
         } finally {
             setLoading(false);
         }
-    };
+    }
 
     return (
         <div>
