@@ -31,10 +31,10 @@ const NavBar = () => {
                     <li>
                         <Link to="/">Home</Link>
                     </li>
-                    {role === 'admin' && <li><Link to="/admin">Admin</Link></li>}
-                    <li>
+                    {name && <li>
                         <Link to="/prode">Jugar</Link>
-                    </li>
+                    </li>}
+                    {role === 'admin' && <li><Link to="/admin">Admin</Link></li>}
                 </ul>
             </nav>
             {name && <h5>Jugador: {name}</h5>}
