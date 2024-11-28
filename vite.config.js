@@ -8,10 +8,14 @@ export default defineConfig({
   server: {
     proxy: {
       '/__/auth': {
-        target: 'http://localhost:5173', // Asegúrate de que el puerto coincida con el de Firebase
+        target: 'http://localhost:5173', 
         changeOrigin: true,
         secure: false,
       }
+    },
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp'
     }
   }
 })
