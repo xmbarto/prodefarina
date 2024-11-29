@@ -31,9 +31,9 @@ const NavBar = () => {
                     <li>
                         <Link to="/">Home</Link>
                     </li>
-                    {name && <li>
+                    <li>
                         <Link to="/prode">Jugar</Link>
-                    </li>}
+                    </li>
                     {role === 'admin' && <li><Link to="/admin">Admin</Link></li>}
                 </ul>
             </nav>
