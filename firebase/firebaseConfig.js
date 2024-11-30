@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app"
+import { initializeApp, setLogLevel } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from 'firebase/auth';
 
@@ -16,4 +16,7 @@ const auth = getAuth(app)
 const provider = new GoogleAuthProvider()
 const db = getFirestore(app)
 
+setLogLevel('debug')
+
 export { auth, provider, db, signInWithPopup, signInWithRedirect, getRedirectResult }
+
