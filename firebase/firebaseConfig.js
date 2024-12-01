@@ -1,6 +1,6 @@
 import { initializeApp, setLogLevel } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: "AIzaSyA88rKLGnbeyq25IRMdve08pqCc7gx1YiY",
@@ -13,10 +13,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
-const provider = new GoogleAuthProvider()
 const db = getFirestore(app)
 
 setLogLevel('debug')
 
-export { auth, provider, db, signInWithPopup, signInWithRedirect, getRedirectResult }
+export { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword }
 
