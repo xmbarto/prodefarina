@@ -2,23 +2,34 @@ import { collection, doc, addDoc, setDoc, getDoc, getDocs } from "firebase/fires
 import { db } from "./firebaseConfig";
 
 
-//check if the user exist
-export const checkUser = async ( user ) => {
+//Register User
+export const registerUser = async (user) => {
     try{
-        const userDoc = doc(db, 'users', user.uid)
-        const docSnapshot = await getDoc(userDoc)
-    
-        if(!docSnapshot.exists()) {
-            await setDoc(userDoc, { 
+        const userDocRef = doc(db, 'users', user.uid)
+        const userDocSnapshot = await getDoc(userDocRef)
+
+        if(!userDocSnapshot.exists()){
+            await setDoc(userDocRef, {
+                name: user.displayName,
+                email: user.email,
                 role: 'player',
-                email: user.email
+                category: 'amateur'
             })
+            console.log('Usuario registrado correctamente')
+        } else {
+            console.log('El usuario ya existe')
         }
-        return docSnapshot.data().role
 
     } catch (e) {
         console.error('Error durante el registro:', e)
     }
+}
+
+// Get user
+export const getUser = async (userId) => {
+    const userDocRef = doc(db, 'users', userId)
+    const userDocSnapshot = await getDoc(userDocRef)
+    return userDocSnapshot.data()
 }
 
 // Add a player

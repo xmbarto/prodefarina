@@ -1,44 +1,45 @@
-import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "../../../firebase/firebaseConfig";
-import { updateProfile } from "firebase/auth";
-import { useState } from "react";
+import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "../../firebase/firebaseConfig"
+import { registerUser } from "../../firebase/firebaseFunctions"
+import { updateProfile } from "firebase/auth"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const LoginRegister = () => {
-    const [displayName, setDisplayName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [isLogin, setIsLogin] = useState(true);
+    const [displayName, setDisplayName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [isLogin, setIsLogin] = useState(true)
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError(null);
+        e.preventDefault()
+        setLoading(true)
+        setError(null)
 
         try {
             if (isLogin) {
-                await signInWithEmailAndPassword(auth, email, password);
-                console.log("Usuario logeado correctamente.");
+                await signInWithEmailAndPassword(auth, email, password)
             } else {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-
-                // Actualiza el nombre del usuario
-                await updateProfile(user, { displayName });
-                console.log("Usuario registrado:", user);
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+                const user = userCredential.user
+                await registerUser({ ...user, displayName })
+                await updateProfile(user, { displayName })
             }
 
             // Limpia los campos después del éxito
             if (!isLogin) {
-                setDisplayName("");
+                setDisplayName("")
             }
-            setEmail("");
-            setPassword("");
+            setEmail("")
+            setPassword("")
+            navigate("/")
         } catch (err) {
-            setError(err.message);
-            console.error("Error al registrarse o iniciar sesión:", err);
+            setError(err.message)
+            console.error("Error al registrarse o iniciar sesión:", err)
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
     };
 
@@ -48,7 +49,7 @@ const LoginRegister = () => {
             <form onSubmit={handleSubmit}>
                 {!isLogin && (
                     <div>
-                        <label>Nombre</label>
+                        <label>Nombre o apodo</label>
                         <input
                             type="text"
                             value={displayName}
@@ -87,4 +88,4 @@ const LoginRegister = () => {
     );
 };
 
-export default LoginRegister;
+export default LoginRegister
