@@ -1,11 +1,10 @@
 
 import { useEffect, useState } from 'react'
 import SingleProdeGame from '../components/play/SingleProdeGame'
-import { getOpenRound } from '../../firebase/firebaseFunctions'
+import { getOpenRound, getUser } from '../../firebase/firebaseFunctions'
 import { updateFullRound } from '../../firebase/updateRounds'
-import { createUserId } from '../functions/createUserId'
 import { createShareableImg } from '../functions/createShareableImg'
-
+import { auth } from '../../firebase/firebaseConfig'
 
 const Prode = () => {
     const [openGame, setOpenGame] = useState(null)
@@ -13,24 +12,34 @@ const Prode = () => {
     const [countSelected, setCountSelected] = useState(0)
     const [readyToPlay, setReadyToPlay] = useState(false)
     const [predictions, setPredictions] = useState([])
-    const [userName, setUserName] = useState('')
+    const [userName, setUserName] = useState(null)
+    const [userId, setUserId] = useState(null)
+    const [userCategory, setUserCategory] = useState(null)
 
     useEffect(() => {
         const fetchOpenGame = async () => {
             try{
                 const newGame = await getOpenRound()
-                setOpenGame(newGame)
-                const populatePredictions = newGame.matches.map(pre => {
-                    return {
-                        matchId: pre.id,
-                        home: false,
-                        draw: false,
-                        away: false
-                    }
-                })
-                setPredictions(populatePredictions)
+                if(!newGame){
+                    return
+                } else {
+                    const actualUser = await getUser(auth.currentUser.uid)
+                    setUserName(actualUser.name)
+                    setUserId(actualUser.id)
+                    setUserCategory(actualUser.category)
+                    setOpenGame(newGame)
+                    const populatePredictions = newGame.matches.map(pre => {
+                        return {
+                            matchId: pre.id,
+                            home: false,
+                            draw: false,
+                            away: false
+                        }
+                    })
+                    setPredictions(populatePredictions)
+                }
             } catch (err) {
-                console.error(err.message)
+                console.log(err.message)
             }
         }
         fetchOpenGame()
@@ -51,14 +60,10 @@ const Prode = () => {
         setPredictions(pred)
     }
 
-    // Actualiza el nombre del jugador
-    function handleChange(e){
-        setUserName(e.target.value)
-    }
 
     // Habilita el botón Play para enviar la tarjeta
     useEffect(() => {
-        if(openGame && openGame.matches && userName){
+        if(openGame && openGame.matches){
             const checksToPlay = openGame.matches.length + 1
             if(countSelected === checksToPlay){
                 setReadyToPlay(true)
@@ -66,7 +71,7 @@ const Prode = () => {
                 setReadyToPlay(false)
             }
         }
-    },[countSelected, openGame, userName])
+    },[countSelected, openGame])
 
     // Genera la imagen de la tarjeta
     const handleGenerateImg = async () => {
@@ -84,20 +89,14 @@ const Prode = () => {
     // Actualiza la tarjeta
     const updateFixture = async (e) => {
         e.preventDefault()
-        const playerExist = openGame.players.some(player => player.name === userName)
-        if(playerExist) {
-            alert('Ya existe un jugador con ese nombre')
-            return
-        }
-        let newUserId = createUserId()
         const updatedFixture = { 
             ...openGame, 
             players: [
                 ...openGame.players,
                 {
-                    id: newUserId,
-                    name: e.target[0].value,
-                    category: 'amateur',
+                    id: userId,
+                    name: userName,
+                    category: userCategory,
                 }
             ],
             predictions: [
@@ -139,12 +138,7 @@ const Prode = () => {
                         </section>
                     <form onSubmit={updateFixture}>
                         <div id='shareable-card' className='shareable-card'>
-                            <input 
-                                className='prode-user-name'
-                                type="text" 
-                                placeholder='Nombre' 
-                                onChange={handleChange}
-                            />
+                            <h4>{userName}</h4>
                             <div className='prode-matches'>
                                 {openGame.matches.map(({id, home, away}) => (
                                     <SingleProdeGame
@@ -169,7 +163,7 @@ const Prode = () => {
                         </button>
                     </form>
                 </div> 
-            : <h3>cargando fecha...</h3>
+            : <h3>Todavía no hay una fecha abierta</h3>
             }
         </>
     )

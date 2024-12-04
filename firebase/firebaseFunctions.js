@@ -53,7 +53,7 @@ export const getOpenRound = async () => {
         if(doc.data().status === 'OP'){
             openRound = doc.data()
         }
-    });
+    })
     return openRound
 }
 
