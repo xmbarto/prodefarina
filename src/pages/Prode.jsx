@@ -20,6 +20,7 @@ const Prode = () => {
         const fetchOpenGame = async () => {
             try{
                 const newGame = await getOpenRound()
+                console.log(newGame)
                 if(!newGame){
                     return
                 } else {

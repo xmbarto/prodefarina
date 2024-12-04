@@ -9,10 +9,11 @@ const AdminProdeForm = () => {
     const prizeRef = useRef(null)
 
 
-    const handleClick = async () => {
+    const displayNextRound = async () => {
         setLoading(true)
         try {
             const lastFixture = await createNextRound()
+            console.log(lastFixture)
             setFixture(lastFixture)
             setShowDetails(true)
 
@@ -45,7 +46,7 @@ const AdminProdeForm = () => {
                     <span className="admin-form-prize-prefix">$</span>
                         <input className="admin-form-prize-input" type="number" ref={prizeRef} name="card-prize" id="prize"/>
                     </label>
-                    <button className="admin-form-get-round" onClick={handleClick}>Generar próxima fecha</button>
+                    <button className="admin-form-get-round" type="button" onClick={displayNextRound}>Mostrar próxima fecha</button>
                     <div>
                         {showDetails && (
                             <>
