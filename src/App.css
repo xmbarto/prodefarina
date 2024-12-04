@@ -22,6 +22,12 @@ input:focus {
     margin-bottom: 20px;
 }
 
+.shareable-card-name{
+    color: #00ff66;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
 .prode-matches div{
     display: flex;
     justify-content: space-between;

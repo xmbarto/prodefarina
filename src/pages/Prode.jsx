@@ -20,13 +20,14 @@ const Prode = () => {
         const fetchOpenGame = async () => {
             try{
                 const newGame = await getOpenRound()
-                console.log(newGame)
                 if(!newGame){
                     return
                 } else {
-                    const actualUser = await getUser(auth.currentUser.uid)
+                    const uid = auth.currentUser.uid
+                    const actualUser = await getUser(uid)
                     setUserName(actualUser.name)
-                    setUserId(actualUser.id)
+                    setUserId(uid)
+                    console.log(uid)
                     setUserCategory(actualUser.category)
                     setOpenGame(newGame)
                     const populatePredictions = newGame.matches.map(pre => {
@@ -121,6 +122,8 @@ const Prode = () => {
             ]
         }
 
+        console.log(updatedFixture)
+
         await updateFullRound(updatedFixture)
         setPredictions([])
         setOpenGame(updatedFixture)
@@ -139,7 +142,7 @@ const Prode = () => {
                         </section>
                     <form onSubmit={updateFixture}>
                         <div id='shareable-card' className='shareable-card'>
-                            <h4>{userName}</h4>
+                            <h3 className='shareable-card-name'>{userName}</h3>
                             <div className='prode-matches'>
                                 {openGame.matches.map(({id, home, away}) => (
                                     <SingleProdeGame
