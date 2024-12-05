@@ -15,6 +15,7 @@ const Prode = () => {
     const [userName, setUserName] = useState(null)
     const [userId, setUserId] = useState(null)
     const [userCategory, setUserCategory] = useState(null)
+    const [isCardSent, setIsCardSent] = useState(false)
 
     useEffect(() => {
         const fetchOpenGame = async () => {
@@ -88,7 +89,7 @@ const Prode = () => {
         }
     }
 
-    // Actualiza la tarjeta
+    // Envía la tarjeta
     const updateFixture = async (e) => {
         e.preventDefault()
         const updatedFixture = { 
@@ -128,46 +129,47 @@ const Prode = () => {
         setPredictions([])
         setOpenGame(updatedFixture)
         setReadyToPlay(false)
+        setIsCardSent(true)
     }
 
     return(
         <>
             {
-            openGame && openGame.matches ? 
-                <div>
-                        <section>
-                            <h2>Fecha <span>{openGame.roundnumber}</span></h2>
-                            <h3>Cierre: <span>Viernes 18hs</span></h3>
-                            <h3>Precio de la tarjeta: <span>${openGame.entryfee}</span></h3>
-                        </section>
-                    <form onSubmit={updateFixture}>
-                        <div id='shareable-card' className='shareable-card'>
-                            <h3 className='shareable-card-name'>{userName}</h3>
-                            <div className='prode-matches'>
-                                {openGame.matches.map(({id, home, away}) => (
-                                    <SingleProdeGame
-                                        key={id}
-                                        home={home.name}
-                                        away={away.name}
-                                        handleDoubleChance={handleDoubleChance}
-                                        numWithTwoSelected={numWithTwoSelected}
-                                        handleReadyToPlay={handleReadyToPlay}
-                                        handlePredictions={handlePredictions}
-                                        predictions={predictions}
-                                        id={id}
-                                    />
-                                ))}
+                !isCardSent && openGame && openGame.matches ? 
+                    <div>
+                            <section>
+                                <h2>Fecha <span>{openGame.roundnumber}</span></h2>
+                                <h3>Cierre: <span>Viernes 18hs</span></h3>
+                                <h3>Precio de la tarjeta: <span>${openGame.entryfee}</span></h3>
+                            </section>
+                        <form onSubmit={updateFixture}>
+                            <div id='shareable-card' className='shareable-card'>
+                                <h3 className='shareable-card-name'>{userName}</h3>
+                                <div className='prode-matches'>
+                                    {openGame.matches.map(({id, home, away}) => (
+                                        <SingleProdeGame
+                                            key={id}
+                                            home={home.name}
+                                            away={away.name}
+                                            handleDoubleChance={handleDoubleChance}
+                                            numWithTwoSelected={numWithTwoSelected}
+                                            handleReadyToPlay={handleReadyToPlay}
+                                            handlePredictions={handlePredictions}
+                                            predictions={predictions}
+                                            id={id}
+                                        />
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                        <button
-                            className='prode-send-button' 
-                            disabled={!readyToPlay}
-                            onClick={handleGenerateImg}
-                        > Enviar tarjeta
-                        </button>
-                    </form>
-                </div> 
-            : <h3>Todavía no hay una fecha abierta</h3>
+                            <button
+                                className='prode-send-button' 
+                                disabled={!readyToPlay}
+                                onClick={handleGenerateImg}
+                            > Enviar tarjeta
+                            </button>
+                        </form>
+                    </div> 
+                : <h3>Todavía no hay una fecha abierta</h3>
             }
         </>
     )
