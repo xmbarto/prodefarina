@@ -13,16 +13,17 @@ export const createNextRound = async () => {
     //filtrar y traer solo los partidos que ya terminaron
     const finishedMatches = apiresponse.filter(match => match.fixture.status.short == 'FT')
     
-    // de los partidos que ya terminaron, encontrar el que tenga fixture.date mas reciente
-    const lastFinished = finishedMatches.sort((a, b) => new Date(b.fixture.date) - new Date(a.fixture.date))[0]
+    // de los partidos que ya terminaron, devolver el round number mayor
+    const lastFinished = finishedMatches.reduce((max, item) => {
+        const currentRoundNumber = getRoundNumber(item.league.round)
+        return currentRoundNumber > max ? currentRoundNumber : max
+    }, 0)
 
-    //obtenr el round del partido más reciente
-    const lastRoundNumber = getRoundNumber(lastFinished.league.round)
 
     //obtener los partidos de la próxima fecha
     const nextRound = apiresponse.filter(match => {
         const roundNumber = getRoundNumber(match.league.round)
-        return roundNumber === lastRoundNumber + 1
+        return roundNumber === lastFinished + 1
     })
     
     const currentRound = {

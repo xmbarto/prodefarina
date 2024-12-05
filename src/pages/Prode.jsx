@@ -28,7 +28,6 @@ const Prode = () => {
                     const actualUser = await getUser(uid)
                     setUserName(actualUser.name)
                     setUserId(uid)
-                    console.log(uid)
                     setUserCategory(actualUser.category)
                     setOpenGame(newGame)
                     const populatePredictions = newGame.matches.map(pre => {
@@ -169,6 +168,7 @@ const Prode = () => {
                             </button>
                         </form>
                     </div> 
+                : openGame ? <h3>Ya enviaste tu tarjeta</h3>
                 : <h3>Todavía no hay una fecha abierta</h3>
             }
         </>

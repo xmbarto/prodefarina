@@ -13,7 +13,6 @@ const AdminProdeForm = () => {
         setLoading(true)
         try {
             const lastFixture = await createNextRound()
-            console.log(lastFixture)
             setFixture(lastFixture)
             setShowDetails(true)
 
