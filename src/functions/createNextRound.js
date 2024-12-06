@@ -1,5 +1,6 @@
 
 import { fetchFixtures } from "./fetchFixtures"
+import { getShortTeamName } from "../utils/shortTeamNames"
 
 export const createNextRound = async () => {
     
@@ -24,6 +25,12 @@ export const createNextRound = async () => {
     const nextRound = apiresponse.filter(match => {
         const roundNumber = getRoundNumber(match.league.round)
         return roundNumber === lastFinished + 1
+    })
+
+    //obtener nombres cortos
+    nextRound.forEach(match => {
+        match.teams.home.name = getShortTeamName(match.teams.home.id)
+        match.teams.away.name = getShortTeamName(match.teams.away.id)
     })
     
     const currentRound = {

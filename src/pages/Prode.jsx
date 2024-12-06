@@ -16,35 +16,50 @@ const Prode = () => {
     const [userId, setUserId] = useState(null)
     const [userCategory, setUserCategory] = useState(null)
     const [isCardSent, setIsCardSent] = useState(false)
+    const [hasPlayed, setHasPlayed] = useState(false)
 
     useEffect(() => {
-        const fetchOpenGame = async () => {
-            try{
+        const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
+            if (!currentUser) {
+                console.log('Usuario no autenticado')
+                return
+            }
+            try {
+                const uid = auth.currentUser.uid
                 const newGame = await getOpenRound()
                 if(!newGame){
                     return
-                } else {
-                    const uid = auth.currentUser.uid
-                    const actualUser = await getUser(uid)
-                    setUserName(actualUser.name)
-                    setUserId(uid)
-                    setUserCategory(actualUser.category)
-                    setOpenGame(newGame)
-                    const populatePredictions = newGame.matches.map(pre => {
-                        return {
-                            matchId: pre.id,
-                            home: false,
-                            draw: false,
-                            away: false
-                        }
-                    })
-                    setPredictions(populatePredictions)
                 }
-            } catch (err) {
-                console.log(err.message)
+                
+                const alreadyPlayed = newGame.players.find(player => player.id === uid)
+                if(alreadyPlayed){
+                    setHasPlayed(true)
+                    return
+                }
+
+                const actualUser = await getUser(uid)
+                setUserName(actualUser.name)
+                setUserId(uid)
+                setUserCategory(actualUser.category)
+                setOpenGame(newGame)
+
+                const populatePredictions = newGame.matches.map(pre => {
+                    return {
+                        matchId: pre.id,
+                        home: false,
+                        draw: false,
+                        away: false
+                    }
+                })
+                setPredictions(populatePredictions)
+                
+            } catch (error) {
+                console.log(error)
             }
-        }
-        fetchOpenGame()
+        })
+
+        return () => unsubscribe()
+        
     },[])
 
     // Controla la doble chance
@@ -168,7 +183,11 @@ const Prode = () => {
                             </button>
                         </form>
                     </div> 
-                : openGame ? <h3>Ya enviaste tu tarjeta</h3>
+                : hasPlayed ? 
+                    <div>
+                        <h3>Ya enviaste tu tarjeta</h3>
+                        <button>Ver tarjeta</button>
+                    </div>
                 : <h3>Todavía no hay una fecha abierta</h3>
             }
         </>
